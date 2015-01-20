@@ -1,0 +1,17 @@
+#!/bin/bash
+
+LOG_DIR="$HADOOP_INSTALL/logs/userlogs"
+JOB=`ls -ltr $LOG_DIR | tail -1 | awk '{ split($0,a," "); print a[9]}'`
+
+
+for file in `find $LOG_DIR/$JOB/*/syslog` 
+do  
+    cat "$file" >> allsyslog
+done
+
+cat allsyslog 
+
+rm allsyslog
+
+
+
