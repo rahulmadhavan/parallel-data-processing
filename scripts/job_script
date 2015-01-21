@@ -1,2 +1,4 @@
+#!/bin/bash
+
 hadoop fs -rm -r /a0/output 
 mvn package

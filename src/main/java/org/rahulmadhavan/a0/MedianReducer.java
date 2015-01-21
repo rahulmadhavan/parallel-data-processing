@@ -11,6 +11,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,23 +25,33 @@ public class MedianReducer extends Reducer<Record,DoubleWritable,Text,DoubleWrit
     @Override
     protected void reduce(Record key, Iterable<DoubleWritable> values, Context context) throws IOException, InterruptedException {
 
-        ArrayList<Double> valueList = new ArrayList<Double>();
+        List<Double> valueList = extractListFromIterable(values);
+        Double median = computeMedian(valueList);
+        context.write(new Text(key.getCategory()),new DoubleWritable(median));
 
+    }
 
-        StringBuilder sb = new StringBuilder();
+    private List<Double> extractListFromIterable(Iterable<DoubleWritable> values){
+
+        List<Double> valueList = new LinkedList<Double>();
 
         for(DoubleWritable value : values){
             valueList.add(value.get());
-            sb.append(" ").append(value.get());
         }
 
-        _log.info("reduce input : "+sb.toString());
+        return  valueList;
 
-        int length = valueList.size();
-        double median = (length + 1) % 2 == 0 ? valueList.get(length/2) : (valueList.get(length/2) + valueList.get((length/2) - 1))/2;
-        context.write(new Text(key.getCategory()),new DoubleWritable(median));
+    }
 
-
+    private Double computeMedian(List<Double> list){
+        int length = list.size();
+        Double result = null;
+        if((length + 1) % 2 == 0 ){
+            result = list.get(length/2);
+        }else{
+            result = (list.get(length/2) + list.get((length/2) - 1))/2;
+        }
+        return result;
 
     }
 }
