@@ -1,16 +1,13 @@
 package org.rahulmadhavan.a0;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.io.DoubleWritable;
-import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.LinkedList;
 import java.util.List;
 

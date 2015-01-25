@@ -1,9 +1,5 @@
 package org.rahulmadhavan.a0;
 
-/**
- * Created by rahulmadhavan on 1/15/15.
- *
- */
 
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.LongWritable;
@@ -12,7 +8,9 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-
+/**
+ * Created by rahulmadhavan on 1/15/15.
+ */
 public class MedianMapper extends Mapper<LongWritable,Text,Record,DoubleWritable> {
 
 

@@ -55,7 +55,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.rahulmadhavan.a0.MedianDriver</mainClass>
+                            <mainClass>org.rahulmadhavan.a1.Runner</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
