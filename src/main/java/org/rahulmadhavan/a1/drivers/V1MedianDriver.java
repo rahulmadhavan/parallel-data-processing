@@ -12,10 +12,7 @@ import org.rahulmadhavan.a1.models.Record;
 import org.rahulmadhavan.a1.utils.MedianUtils;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -46,7 +43,9 @@ public class V1MedianDriver extends Configured implements Tool {
         }
 
         for (String category : recordsByCategory.keySet()){
-            medianMap.put(category,MedianUtils.computeMedian(recordsByCategory.get(category)));
+            List<Double> list = recordsByCategory.get(category);
+            Collections.sort(list);
+            medianMap.put(category,MedianUtils.computeMedian(list));
         }
 
         return medianMap;
@@ -80,11 +79,12 @@ public class V1MedianDriver extends Configured implements Tool {
 
         try {
             // first line is the header
-            br.readLine();
             String line = br.readLine();
 
             while (line != null) {
-                list.add(parseInputAsRecord(line));
+                Record record = parseInputAsRecord(line);
+                if(null != record)
+                    list.add(record);
                 line = br.readLine();
             }
 
@@ -104,15 +104,16 @@ public class V1MedianDriver extends Configured implements Tool {
         String[] input = line.split("\t");
 
         if(input.length != 6){
-            log.error("INPUT_DATA_FORMAT_ERROR " + input);
-        }
+            log.error("INPUT_DATA_FORMAT_ERROR " + line);
 
-        try {
-            productCategory = input[4];
-            productPrice = Double.parseDouble(input[5]);
-            record = new org.rahulmadhavan.a1.models.Record(productCategory,productPrice);
-        }catch (Exception e){
-            log.error("PRICE_PARSE_ERROR " + input);
+        }else{
+            try {
+                productCategory = input[3];
+                productPrice = Double.parseDouble(input[4]);
+                record = new org.rahulmadhavan.a1.models.Record(productCategory,productPrice);
+            }catch (Exception e){
+                log.error("PRICE_PARSE_ERROR " + input[4].toString());
+            }
         }
 
         return record;

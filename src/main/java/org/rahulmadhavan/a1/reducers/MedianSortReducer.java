@@ -5,10 +5,8 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.rahulmadhavan.a0.Record;
+import org.rahulmadhavan.a1.models.Record;
 import org.rahulmadhavan.a1.utils.MedianUtils;
-
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
