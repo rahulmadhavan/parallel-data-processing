@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ $# -ne 1 ] && [ $# -ne 2 ]; then
+  echo "Usage : hls assignment-name [output]"
+  exit 0  
+fi 
+
+if [ $# -eq 2 ]; then
+    hadoop fs -ls /$1/$2
+else
+    hadoop fs -ls /$1    
+fi

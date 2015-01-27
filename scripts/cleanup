@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+  echo "Usage : cleanup assignment-name"
+  exit 0  
+fi 
+
+
+hadoop fs -rm -r /$1/input
+hadoop fs -rm -r /$1/output
+

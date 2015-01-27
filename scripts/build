@@ -1,0 +1,11 @@
+
+
+PROJECT_PATH=$MR_PROJECT_PATH
+
+echo $MR_PROJECT_PATH
+
+cd $PROJECT_PATH
+
+mvn package
+
+zip -d $PROJECT_PATH/target/parallel-processing-1.0-SNAPSHOT-jar-with-dependencies.jar META-INF/LICENSE  

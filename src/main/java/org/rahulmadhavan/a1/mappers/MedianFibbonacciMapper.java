@@ -34,7 +34,7 @@ public class MedianFibbonacciMapper extends Mapper<LongWritable,Text,Record,Doub
 
             int N = context.getConfiguration().getInt("N",20);
             long fibboOfN = MedianUtils.fibonacci(N);
-            log.info("Fibbonacci number "+N + " is "+fibboOfN);
+            //log.info("Fibbonacci number "+N + " is "+fibboOfN);
 
         }catch (Exception e){
 

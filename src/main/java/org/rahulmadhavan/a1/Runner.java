@@ -6,6 +6,8 @@ import org.rahulmadhavan.a1.drivers.V2MedianDriver;
 import org.rahulmadhavan.a1.drivers.V3MedianDriver;
 import org.rahulmadhavan.a1.drivers.V4MedianDriver;
 
+import java.util.Date;
+
 /**
  * Created by rahulmadhavan on 1/25/15.
  */
@@ -20,6 +22,10 @@ public class Runner{
         }
 
         int exitCode;
+
+
+        long start = new Date().getTime();
+
 
         switch (version) {
             case 1:
@@ -39,6 +45,10 @@ public class Runner{
                 ToolRunner.printGenericCommandUsage(System.err);
                 return;
         }
+
+        long end = new Date().getTime();
+        System.out.println("Job took "+(end-start) + " milliseconds");
+
 
         System.exit(exitCode);
 

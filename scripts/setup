@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+   echo "Usage is  : setup assignment-name" 
+   exit 0
+fi
+
+hadoop fs -mkdir -p /$1/input
+

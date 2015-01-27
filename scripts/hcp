@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+  echo "Usage : hcp assignment-name src"
+  exit 0  
+fi 
+
+hadoop fs -copyFromLocal $2 /$1/input

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ $# -ne 1 ] && [ $# -ne 2 ]; then
+  echo "Usage : hrm assignment-name [path]"
+  exit 0  
+fi 
+
+if [ $# -eq 2 ]; then
+    hadoop fs -rm -r /$1/$2
+else
+    hadoop fs -rm -r /$1    
+fi
