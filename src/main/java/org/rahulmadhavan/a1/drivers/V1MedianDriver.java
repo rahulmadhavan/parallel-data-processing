@@ -1,13 +1,10 @@
 package org.rahulmadhavan.a1.drivers;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ListMultimap;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configured;
-
 import org.apache.hadoop.util.Tool;
-import org.apache.hadoop.util.ToolRunner;
 import org.rahulmadhavan.a1.models.Record;
 import org.rahulmadhavan.a1.utils.MedianUtils;
 
@@ -26,8 +23,11 @@ public class V1MedianDriver extends Configured implements Tool {
     @Override
     public int run(String[] args) throws Exception {
 
+        log.info("Begining extraction");
         List<Record> records = extractRecordsFromFile(args[1]);
+        log.info("completed extraction. Total records : "+records.size());
         Map<String,Double> medianMap = computeMedianForRecordsByCategories(records);
+        log.info("completed computation");
         writeMedianMapToFile(args[2],medianMap);
 
         return 0;
@@ -35,20 +35,29 @@ public class V1MedianDriver extends Configured implements Tool {
 
     private Map<String,Double> computeMedianForRecordsByCategories(List<Record> records){
 
-        ListMultimap<String, Double> recordsByCategory = ArrayListMultimap.create();
-        Map<String,Double> medianMap = new HashMap<String, Double>();
+        Map<String,ArrayList<Double>> map = new HashMap<String, ArrayList<Double>>();
 
-        for (Record record : records) {
-            recordsByCategory.put(record.getCategory(), record.getPrice());
+        for (Record record : records){
+            ArrayList<Double> list = map.get(record.getCategory());
+            if (null == list){
+                list = new ArrayList<Double>();
+                list.add(record.getPrice());
+                map.put(record.getCategory(),list);
+            }else{
+                list.add(record.getPrice());
+            }
         }
 
-        for (String category : recordsByCategory.keySet()){
-            List<Double> list = recordsByCategory.get(category);
+        Map<String,Double> mapResult = new HashMap<String, Double>();
+
+        for (String category: map.keySet()){
+            ArrayList<Double> list = map.get(category);
             Collections.sort(list);
-            medianMap.put(category,MedianUtils.computeMedian(list));
+            double median = MedianUtils.computeMedian(list);
+            mapResult.put(category,median);
         }
 
-        return medianMap;
+        return mapResult;
 
     }
 
@@ -99,7 +108,7 @@ public class V1MedianDriver extends Configured implements Tool {
 
         String productCategory;
         double productPrice;
-        org.rahulmadhavan.a1.models.Record record = null;
+        Record record = null;
 
         String[] input = line.split("\t");
 
@@ -110,7 +119,7 @@ public class V1MedianDriver extends Configured implements Tool {
             try {
                 productCategory = input[3];
                 productPrice = Double.parseDouble(input[4]);
-                record = new org.rahulmadhavan.a1.models.Record(productCategory,productPrice);
+                record = new Record(productCategory,productPrice);
             }catch (Exception e){
                 log.error("PRICE_PARSE_ERROR " + input[4].toString());
             }

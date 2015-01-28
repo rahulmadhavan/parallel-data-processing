@@ -1,0 +1,24 @@
+(Q1) What is the performance difference between v1, v2 and v3 where you run v2 and v3 both 
+in a single Hadoop process and "pseudo" distributed processes.
+
+v1 Job took                                 1 hour 37 minutes 21 seconds 
+v2 Job on an average takes        6mins, 42sec
+v3 Job on an average takes        6mins, 20sec
+
+
+
+(Q2) Comparing v(3) with v4, what is the largest value of N that does not affect performance?
+
+v4 -  6mins, 32sec    N = 100
+v4 -  6mins, 24sec    N = 200
+v4 -  6mins, 43sec    N = 300
+v4 -  6mins, 33sec    N = 500
+v4 -  6mins, 27sec    N = 650
+v4 -  6mins, 52sec    N = 800
+v4 -  7mins, 14sec    N = 1000
+
+
+(Q3) How many instances of the reducer are running?  The input file is (here 1.7GB txt file).
+
+Only 1 instance of reducer runs for all versions of the job.
+

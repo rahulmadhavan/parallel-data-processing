@@ -1,0 +1,42 @@
+
+prerequisites 
+1) you must have hadoop in your path
+2) you must have maven installed on your path
+
+cd to the project folder i.e the folder in which this README file is placed 
+
+
+export MR_PROJECT_PATH="`pwd`”
+
+./scripts/cleanup a1
+./scripts/setup a1
+
+./scripts/lcp a1 path-to-input
+
+verify if file is copied using 
+
+./scripts/hls a1 input
+
+for running version 1
+./scripts/run 1 path-to-input v1-out > logs.1 2>&1
+
+for running version 2
+./scripts/run 2 > logs.2 2>&1
+
+for running version 3
+./scripts/run 3 > logs.3 2>&1
+
+for running version 4
+./scripts/run 4 fibbo-number > logs.4 2>&1
+
+
+output for jobs would be in files v1-out v2-out v3-out v4-out
+which are generated after running the corresponding version
+
+job time would be available in the corresponding logs
+
+to cleanup your hdfs                 
+use 
+
+./scripts/cleanup a1
+
