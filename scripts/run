@@ -47,6 +47,18 @@ function generate_output(){
 
 
 case $VERSION in
+    5)
+        if [ $NUM_OF_ARGS -ne 2 ]; then
+            echo "Usage : run 5 sample_rate"
+            exit 0;
+        fi     
+        SR=$2
+        cleanup $VERSION
+        input_path $@
+        output_path $@
+        hadoop jar $JAR_PATH $VERSION $SR $INPUT_PATH $OUTPUT_PATH        
+        generate_output;
+    ;; 
     4)
         if [ $NUM_OF_ARGS -ne 2 ]; then
             echo "Usage : run 4 fibbo_number"

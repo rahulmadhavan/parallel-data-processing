@@ -1,5 +1,7 @@
 package org.rahulmadhavan.a1.drivers;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.DoubleWritable;
@@ -21,8 +23,12 @@ import org.rahulmadhavan.a1.reducers.MedianReducer;
  */
 public class V3MedianDriver extends Configured implements Tool{
 
+    private static final Log log = LogFactory.getLog(V3MedianDriver.class);
+
     @Override
     public int run(String[] args) throws Exception {
+
+        log.info("V3MedianDriver");
 
         Job job = new Job(getConf(),"Median Calculator v3");
         job.setJarByClass(getClass());

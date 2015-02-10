@@ -11,6 +11,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
+import org.rahulmadhavan.a1.combiner.DataSampler;
 import org.rahulmadhavan.a1.comparators.RecordCategoryGroupingComparator;
 import org.rahulmadhavan.a1.comparators.RecordComparator;
 import org.rahulmadhavan.a1.mappers.MedianFibbonacciMapper;
@@ -19,24 +20,30 @@ import org.rahulmadhavan.a1.partitioners.RecordCategoryPartitioner;
 import org.rahulmadhavan.a1.reducers.MedianReducer;
 
 /**
- * Created by rahulmadhavan on 1/25/15.
+ * Created by rahulmadhavan on 2/9/15.
  */
-public class V4MedianDriver extends Configured implements Tool {
+public class V5MedianDriver extends Configured implements Tool {
 
-    private static final Log log = LogFactory.getLog(V4MedianDriver.class);
+    private static final Log log = LogFactory.getLog(V5MedianDriver.class);
 
     @Override
     public int run(String[] args) throws Exception {
 
         Configuration configuration = getConf();
-        configuration.setInt("N",Integer.parseInt(args[1]));
+        int SR = Integer.parseInt(args[1]);
+        if(SR < 2 || SR > 10){
 
-        log.info("V4MedianDriver");
+        }
 
-        Job job = new Job(configuration,"Median Calculator v4");
+        log.info("V5MedianDriver");
+
+        configuration.setInt("SR",Integer.parseInt(args[1]));
+
+        Job job = new Job(configuration,"Approx Median Calculator v5");
         job.setJarByClass(getClass());
         job.setGroupingComparatorClass(RecordCategoryGroupingComparator.class);
         job.setSortComparatorClass(RecordComparator.class);
+        job.setCombinerClass(DataSampler.class);
         job.setPartitionerClass(RecordCategoryPartitioner.class);
 
         FileInputFormat.addInputPath(job, new Path(args[2]));

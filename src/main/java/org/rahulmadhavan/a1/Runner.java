@@ -1,10 +1,7 @@
 package org.rahulmadhavan.a1;
 
 import org.apache.hadoop.util.ToolRunner;
-import org.rahulmadhavan.a1.drivers.V1MedianDriver;
-import org.rahulmadhavan.a1.drivers.V2MedianDriver;
-import org.rahulmadhavan.a1.drivers.V3MedianDriver;
-import org.rahulmadhavan.a1.drivers.V4MedianDriver;
+import org.rahulmadhavan.a1.drivers.*;
 
 import java.util.Date;
 
@@ -40,8 +37,11 @@ public class Runner{
             case 4:
                 exitCode = ToolRunner.run(new V4MedianDriver(), args);
                 break;
+            case 5:
+                exitCode = ToolRunner.run(new V5MedianDriver(), args);
+                break;
             default:
-                System.err.printf("version should be either 1, 2, 3 or 4");
+                System.err.printf("version should be either 1, 2, 3, 4 or 5");
                 ToolRunner.printGenericCommandUsage(System.err);
                 return;
         }
@@ -58,6 +58,7 @@ public class Runner{
 
         String messageV123 = "Usage: %s [generic options] <version> <input> <output>\n";
         String messageV4 = "Usage: %s [generic options] N <version> <input> <output>\n";
+        String messageV5 = "Usage: %s [generic options] SR[1 - 10] <version> <input> <output>\n";
         int numberOfArguments = 3;
         String errorMessage = messageV123;
 
@@ -65,6 +66,9 @@ public class Runner{
 
         if(version == 4){
             errorMessage = messageV4;
+            numberOfArguments = 4;
+        }else if (version == 5){
+            errorMessage = messageV5;
             numberOfArguments = 4;
         }
 

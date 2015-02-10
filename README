@@ -11,11 +11,17 @@ export MR_PROJECT_PATH="`pwd`”
 ./scripts/cleanup a1
 ./scripts/setup a1
 
-./scripts/lcp a1 path-to-input
+./scripts/hcp a1 path-to-input
 
 verify if file is copied using 
 
 ./scripts/hls a1 input
+
+
+build the project
+
+./scripts/build
+
 
 for running version 1
 ./scripts/run 1 path-to-input v1-out > logs.1 2>&1
@@ -29,6 +35,8 @@ for running version 3
 for running version 4
 ./scripts/run 4 fibbo-number > logs.4 2>&1
 
+for running version 5
+./scripts/run 5 sample_rate > logs.5 2>&1
 
 output for jobs would be in files v1-out v2-out v3-out v4-out
 which are generated after running the corresponding version
