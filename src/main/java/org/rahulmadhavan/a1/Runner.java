@@ -58,7 +58,7 @@ public class Runner{
 
         String messageV123 = "Usage: %s [generic options] <version> <input> <output>\n";
         String messageV4 = "Usage: %s [generic options] N <version> <input> <output>\n";
-        String messageV5 = "Usage: %s [generic options] SR[1 - 10] <version> <input> <output>\n";
+        String messageV5 = "Usage: %s [generic options] SR[1 - 100] <version> <input> <output>\n";
         int numberOfArguments = 3;
         String errorMessage = messageV123;
 

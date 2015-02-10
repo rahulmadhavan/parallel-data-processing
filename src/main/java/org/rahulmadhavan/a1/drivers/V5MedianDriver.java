@@ -12,6 +12,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.rahulmadhavan.a1.combiner.DataSampler;
+import org.rahulmadhavan.a1.combiner.PercentageDataSampler;
 import org.rahulmadhavan.a1.comparators.RecordCategoryGroupingComparator;
 import org.rahulmadhavan.a1.comparators.RecordComparator;
 import org.rahulmadhavan.a1.mappers.MedianFibbonacciMapper;
@@ -31,8 +32,8 @@ public class V5MedianDriver extends Configured implements Tool {
 
         Configuration configuration = getConf();
         int SR = Integer.parseInt(args[1]);
-        if(SR < 2 || SR > 10){
-
+        if(SR < 1 || SR > 100){
+            throw new IllegalArgumentException("Sample rate should be between 1 and 100");
         }
 
         log.info("V5MedianDriver");
@@ -43,7 +44,7 @@ public class V5MedianDriver extends Configured implements Tool {
         job.setJarByClass(getClass());
         job.setGroupingComparatorClass(RecordCategoryGroupingComparator.class);
         job.setSortComparatorClass(RecordComparator.class);
-        job.setCombinerClass(DataSampler.class);
+        job.setCombinerClass(PercentageDataSampler.class);
         job.setPartitionerClass(RecordCategoryPartitioner.class);
 
         FileInputFormat.addInputPath(job, new Path(args[2]));
