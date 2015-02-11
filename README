@@ -36,9 +36,9 @@ for running version 4
 ./scripts/run 4 fibbo-number > logs.4 2>&1
 
 for running version 5
-./scripts/run 5 sample_rate > logs.5 2>&1
+./scripts/run 5 sample_rate[1 to 100] > logs.5 2>&1
 
-output for jobs would be in files v1-out v2-out v3-out v4-out
+output for jobs would be in files v1-out v2-out v3-out v4-out v5-out
 which are generated after running the corresponding version
 
 job time would be available in the corresponding logs
