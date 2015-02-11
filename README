@@ -1,10 +1,8 @@
-
-prerequisites 
+prerequisites
 1) you must have hadoop in your path
 2) you must have maven installed on your path
 
 cd to the project folder i.e the folder in which this README file is placed 
-
 
 export MR_PROJECT_PATH="`pwd`”
 
@@ -22,6 +20,7 @@ build the project
 
 ./scripts/build
 
+the fat jar will be generated inside the target directory
 
 for running version 1
 ./scripts/run 1 path-to-input v1-out > logs.1 2>&1
