@@ -40,6 +40,11 @@
             <version>18.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <!-- Build rule -->
@@ -66,7 +71,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.rahulmadhavan.a1.Runner</mainClass>
+                            <mainClass>org.mapred.a1.Runner</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
