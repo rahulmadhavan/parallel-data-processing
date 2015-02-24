@@ -1,6 +1,7 @@
 package org.mapred.a3.mappers;
 
 import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -29,7 +30,7 @@ public class AirlineMapperTest {
 
         airlineMapper.map(new LongWritable(1),new Text(input),context);
 
-        verify(context).write(new Text("19805"),new DoubleWritable(0));
+        verify(context).write(new Text("19805"),new IntWritable(0));
 
 
     }

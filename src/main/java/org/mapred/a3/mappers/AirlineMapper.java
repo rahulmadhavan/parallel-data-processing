@@ -4,6 +4,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Created by rahulmadhavan on 2/23/15.
  */
-public class AirlineMapper extends Mapper<LongWritable,Text,Text,DoubleWritable> {
+public class AirlineMapper extends Mapper<LongWritable,Text,Text,IntWritable> {
 
     private static final int DELAY_15_INDEX = 33;
     private static final int AIRLINE_ID = 7;
@@ -32,7 +33,7 @@ public class AirlineMapper extends Mapper<LongWritable,Text,Text,DoubleWritable>
                 int delayed = Integer.parseInt(csvRecord.get(DELAY_15_INDEX));
                 String airlineId = csvRecord.get(AIRLINE_ID);
                 if(null != airlineId){
-                    context.write(new Text(airlineId),new DoubleWritable(delayed));
+                    context.write(new Text(airlineId),new IntWritable(delayed));
                 }
             }catch (NullPointerException e){
 
