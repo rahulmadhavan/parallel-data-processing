@@ -71,7 +71,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.mapred.a1.Runner</mainClass>
+                            <mainClass>org.mapred.a3.Runner</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
