@@ -12,7 +12,7 @@ import weka.classifiers.trees.J48;
 import weka.core.Instances;
 
 import java.io.*;
-
+import java.util.Random;
 
 
 public class AirlineDelayPredictor{
@@ -21,10 +21,10 @@ public class AirlineDelayPredictor{
 
     public static void main (String[] args) throws Exception{
 
-        if(args.length != 1) {
-            System.exit(1);
-        }
-
+//        if(args.length != 1) {
+//            System.exit(1);
+//        }
+//
         //to test
         String folderPath = "/Users/rahulmadhavan/Documents/developer/ms/parallel/assignments/a3/a3data";
 
@@ -32,33 +32,52 @@ public class AirlineDelayPredictor{
 
         //preprocess the training and test files
         String srcTrainData = folderPath + "/data.csv";
-        String srcTestData = folderPath + "/check.csv";
+        String srcTestData = folderPath + "/predict.csv";
 
         String storeCompressedTrainData =  folderPath +  "/data_compressed.txt";
         String storeCompressedTestData = folderPath +  "/check_compressed.txt";
+        String storeCompressedPredictData = folderPath +  "/predict_compressed.txt";
 
-        preprocess(srcTrainData, storeCompressedTrainData);
-        preprocess(srcTestData, storeCompressedTestData);
+        preprocess(srcTrainData, storeCompressedTrainData,false);
+        preprocess(srcTestData,  storeCompressedTestData,false);
+        preprocess(srcTestData, storeCompressedPredictData,true);
 
         Instances train = buildInstancesFromText(storeCompressedTrainData);
+        Instances test = buildInstancesFromText(storeCompressedTestData);
+        Instances toPredict = buildInstancesFromText(storeCompressedPredictData);
+        Instances predicted = new Instances(toPredict);
+
         //Form Decision tree
         FilteredClassifier classifier = buildDecisionTree(train);
 
         //Evaluate
-        Instances test = buildInstancesFromText(storeCompressedTestData);
         Evaluation evaluation = performEvaluation(classifier, train, test);
         System.out.println(evaluation.toSummaryString());
+
+
+
+        for (int i = 0; i < toPredict.numInstances(); i++) {
+            double clsLabel = classifier.classifyInstance(toPredict.instance(i));
+            predicted.instance(i).setClassValue(clsLabel);
+        }
+        // save labeled data
+        BufferedWriter writer = new BufferedWriter(
+                new FileWriter(folderPath +"/labeled.arff"));
+        writer.write(predicted.toString());
+        writer.newLine();
+        writer.flush();
+        writer.close();
     }
 
 
-    public static void preprocess(String rpath,String wpath) throws IOException{
+    public static void preprocess(String rpath,String wpath,boolean isPredict) throws IOException{
 
         CSVParser csvParser = new CSVParser(new FileReader(new File(rpath)), CSVFormat.DEFAULT);
         BufferedWriter bw = new BufferedWriter(new FileWriter(new File(wpath)));
         preprocessWriteLegend(bw);
 
         for (final CSVRecord record : csvParser) {
-            String compressedLine = preprocessBuildCompressedString(record);
+            String compressedLine = preprocessBuildCompressedString(record,isPredict);
             // If there is missing data, the function preprocessBuildCompressedString will return null
             if (compressedLine != null){
                 bw.write(compressedLine+"\n");
@@ -85,22 +104,30 @@ public class AirlineDelayPredictor{
         bw.flush();
     }
 
-    private static String preprocessBuildCompressedString(CSVRecord record)  {
 
-        int[] indexColumns = {2,4,11,20,31,55,44};
+
+    private static String preprocessBuildCompressedString(CSVRecord record,boolean isPredict)  {
+        int[] indexColumns = new int[]{2,4,11,20,31,55,44};
+
         StringBuilder sb = new StringBuilder();
         String comma ="";
 
         for(int index : indexColumns){
 
                 if(! StringUtils.isEmpty(record.get(index))){
-                    sb.append(comma).append(record.get(index));
+                    if(isPredict && index == 44){
+                        sb.append(comma).append("?");
+                    }else{
+                        sb.append(comma).append(record.get(index));
+                    }
                     comma = ",";
+
                 }else{
                     return null;
                 }
 
         }
+
 
         return new String(sb);
     }
