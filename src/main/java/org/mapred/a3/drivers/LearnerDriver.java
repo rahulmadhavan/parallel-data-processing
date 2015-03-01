@@ -46,7 +46,7 @@ public class LearnerDriver extends Configured implements Tool {
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
         if(job.waitForCompletion(true)){
-            fs.rename(new Path(args[1].concat("/part-r-00000")),new Path(args[1].concat("/model.m")));
+            fs.rename(new Path(args[0].concat("/part-r-00000")),new Path(args[1].concat("/model.m")));
             return 1;
         }else {
             return 0;
