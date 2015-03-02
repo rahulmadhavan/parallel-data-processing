@@ -62,11 +62,44 @@ public class AirlineDelayPredictor{
         }
         // save labeled data
         BufferedWriter writer = new BufferedWriter(
-                new FileWriter(folderPath +"/labeled.arff"));
+                new FileWriter(folderPath +"/labeled.txt"));
         writer.write(predicted.toString());
         writer.newLine();
         writer.flush();
         writer.close();
+
+        System.out.println(comparator(folderPath +"/labeled.txt",storeCompressedTestData));
+    }
+
+    public static double comparator(String labeled, String
+            check_compressed) throws FileNotFoundException {
+        FileInputStream fis1 = new FileInputStream(labeled);
+        BufferedReader br1 = new BufferedReader(new InputStreamReader(fis1));
+        FileInputStream fis2 = new FileInputStream(check_compressed);
+        BufferedReader br2 = new BufferedReader(new InputStreamReader(fis2));
+        String line1 = null;
+        String line2 = null;
+        double count = 0;
+        double match = 0;
+        try{
+            br1.readLine();
+            br1.readLine();
+            for(int i = 0; i<9; i++ ){
+                br1.readLine();
+                br2.readLine();
+            }
+            while (((line1 = br1.readLine()) != null)&&((line2 = br2.readLine()) != null)) {
+
+                count++;
+                if (line1.equals(line2))
+                    match++;
+            }
+            br2.close();
+            br1.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return (match/count *100);
     }
 
 
