@@ -76,7 +76,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.mapred.a3.Runner</mainClass>
+                            <mainClass>org.mapred.a3.standalone.AirlineDelayRunner</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
