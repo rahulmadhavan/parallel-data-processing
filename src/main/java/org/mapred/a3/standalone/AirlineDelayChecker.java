@@ -9,7 +9,7 @@ public class AirlineDelayChecker {
 
     private String predicted;
     private String actual;
-    private static final String CLIPPED_ACTUAL_FILE = "/check_c.csv";
+    private static final String CLIPPED_ACTUAL_FILE = "/check_c.txt";
 
     public AirlineDelayChecker(String predicted, String actual){
         this.predicted = predicted;
@@ -45,8 +45,11 @@ public class AirlineDelayChecker {
             }
             while (((line1 = br1.readLine()) != null)&&((line2 = br2.readLine()) != null)) {
 
+                String[] l1 = line1.split(",");
+                String[] l2 = line2.split(",");
+
                 count++;
-                if (line1.equals(line2))
+                if (l1[6].equals(l2[6]))
                     match++;
             }
             br2.close();
