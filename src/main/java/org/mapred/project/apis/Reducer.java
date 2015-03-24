@@ -12,7 +12,7 @@ public interface Reducer<KEY_IN,VALUE_IN,KEY_OUT,VALUE_OUT> {
 
     void setup();
 
-    Map<KEY_OUT,VALUE_OUT> reduce(KEY_IN key,List<VALUE_IN> value);
+    Map<KEY_OUT,List<VALUE_OUT>> reduce(KEY_IN key,List<VALUE_IN> value);
 
     void cleanup();
 
