@@ -6,6 +6,8 @@ import java.util.Map;
 /**
  * Created by rahulmadhavan on 3/23/15.
  */
+
+
 public interface Reducer<KEY_IN,VALUE_IN,KEY_OUT,VALUE_OUT> {
 
     void setup();
