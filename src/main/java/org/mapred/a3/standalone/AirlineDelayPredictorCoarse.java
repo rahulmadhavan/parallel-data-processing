@@ -111,6 +111,7 @@ public class AirlineDelayPredictorCoarse{
         BufferedWriter bw = new BufferedWriter(new FileWriter(new File(wpath)));
         preprocessWriteLegend(bw);
 
+
         for (final CSVRecord record : csvParser) {
             String compressedLine = preprocessBuildCompressedString(record,isPredict);
             // If there is missing data, the function preprocessBuildCompressedString will return null

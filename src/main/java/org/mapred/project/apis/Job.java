@@ -10,7 +10,7 @@ import org.apache.hadoop.fs.Path;
  *
  * Job represents a Map Reduce Job
  * It references 1 {@link Mapper} and 1 {@link Reducer} Class
- * It also has references a {@link Context} object which holds
+ * It also has references a {@link RaspContext} object which holds
  * the context variables and its corresponding values for the job
  */
 public interface Job{
@@ -70,10 +70,10 @@ public interface Job{
     boolean execute();
 
     /**
-     * Every job has 1 {@link Context} object
+     * Every job has 1 {@link RaspContext} object
      *
-     * @return the {@link Context} object for the current job
+     * @return the {@link RaspContext} object for the current job
      */
-    Context getContext();
+    RaspContext getContext();
 
 }
